@@ -135,7 +135,7 @@ def make_fig1_workflow(out_dir):
     ax_b.plot(ai_x, surrogate_curve, color=C_RED, ls="--", lw=1.9, label="In-Domain Trained Surrogate f_hat(Pi*)")
 
     ax_b.annotate(
-        "Proposition 1 (Order-Stat Quantiles):\nPhysical completion shrinks ID\ncalibration quantile by 37%–48%\n(q_m0h=0.170, q_comp=0.208 < q_raw=0.347)",
+        "Proposition 1 (Order-Stat Quantiles):\nPhysical completion shrinks ID quantile\nby 34%–46% vs. AI_t (40%–51% vs. raw)\n(q_m0h=0.170, q_comp=0.208 < q_raw=0.347)",
         xy=(0.56, surrogate_curve[42] + q_c_vis), xytext=(0.32, 0.06),
         fontsize=6.6, fontweight="bold", color=C_NAVY,
         bbox=dict(boxstyle="round,pad=0.20", facecolor="white", edgecolor=C_BLUE),
@@ -185,12 +185,12 @@ def make_fig1_workflow(out_dir):
               bbox=dict(boxstyle="round,pad=0.16", facecolor="white", edgecolor=C_RED, alpha=0.92))
 
     ax_c.text(
-        0.86, -0.33,
-        "Tuning-Free IJS-CP Adjustment:\n"
+        0.54, -0.34,
+        "Tuning-Free IJS-CP Adjustment (Eq. 11):\n"
         "Delta_M(Pi) = |M0(Pi) - M0(Pi_proj)| >= 0\n"
-        "q_IJS = q_Pi*sqrt(1 + [d_tilde - 1]_+) + [Delta_M - Delta_M,cal]_+",
-        fontsize=6.8, fontweight="bold", color="#1A202C",
-        bbox=dict(boxstyle="round,pad=0.22", facecolor="#FFFFF0", edgecolor=C_TEAL, lw=1.2)
+        "q_IJS = q_Pi*sqrt(1 + [d_tilde(Pi) - 1]_+) + [Delta_M - Delta_M,cal]_+",
+        fontsize=6.0, fontweight="bold", color="#1A202C",
+        bbox=dict(boxstyle="round,pad=0.20", facecolor="#FFFFF0", edgecolor=C_TEAL, lw=1.2)
     )
     ax_c.set_xlim(0.2, 2.4)
     ax_c.set_ylim(-0.38, 0.55)
