@@ -1,0 +1,66 @@
+{
+  "filter_log": {
+    "GB": {
+      "raw_total": 671,
+      "kept": 644,
+      "drop_short_record": 17,
+      "drop_snow": 3,
+      "drop_water_balance": 7
+    },
+    "AUS": {
+      "raw_total": 561,
+      "kept": 558,
+      "drop_short_record": 3
+    }
+  },
+  "regions": {
+    "GB": {
+      "n_basins": 644,
+      "n_near_natural": 490,
+      "n_basin_years": 25675,
+      "n_consecutive_lag1_pairs": 24492,
+      "AI_min": 0.116,
+      "AI_median": 0.527,
+      "AI_max": 0.936,
+      "AI_gt_1_count": 0,
+      "RR_min": 0.034,
+      "RR_median": 0.532,
+      "RR_max": 0.965,
+      "area_km2_median": 153.1,
+      "wy_min": 1971,
+      "wy_max": 2015
+    },
+    "AUS": {
+      "n_basins": 558,
+      "n_near_natural": 379,
+      "n_basin_years": 27014,
+      "n_consecutive_lag1_pairs": 25437,
+      "AI_min": 0.332,
+      "AI_median": 1.365,
+      "AI_max": 7.045,
+      "AI_gt_1_count": 448,
+      "RR_min": 0.004,
+      "RR_median": 0.159,
+      "RR_max": 0.9,
+      "area_km2_median": 390.6,
+      "wy_min": 1951,
+      "wy_max": 2021
+    },
+    "ALL": {
+      "n_basins": 1202,
+      "n_near_natural": 869,
+      "n_basin_years": 52689,
+      "n_consecutive_lag1_pairs": 49929,
+      "AI_min": 0.116,
+      "AI_median": 0.784,
+      "AI_max": 7.045,
+      "AI_gt_1_count": 448,
+      "RR_min": 0.004,
+      "RR_median": 0.339,
+      "RR_max": 0.965,
+      "area_km2_median": 226.9,
+      "wy_min": 1951,
+      "wy_max": 2021
+    }
+  }
+}

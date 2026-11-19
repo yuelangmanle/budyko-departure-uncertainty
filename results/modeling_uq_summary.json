@@ -1,0 +1,427 @@
+{
+  "S1_Gauged_Temporal": {
+    "n_train": 29473,
+    "n_cal": 10024,
+    "n_test": 10432,
+    "baselines": {
+      "M0_Global_Fu": {
+        "RMSE": 0.1221,
+        "MAE": 0.0894,
+        "R2": 0.7966,
+        "Bias": 0.0122
+      },
+      "M1_Basin_Fu": {
+        "RMSE": 0.1004,
+        "MAE": 0.0741,
+        "R2": 0.8625,
+        "Bias": 0.0296
+      },
+      "M1b_Persistence_RR_lag1": {
+        "RMSE": 0.1022,
+        "MAE": 0.0703,
+        "R2": 0.8575,
+        "Bias": 0.0001
+      },
+      "M2_Dynamic_Budyko_ARX": {
+        "RMSE": 0.0887,
+        "MAE": 0.0641,
+        "R2": 0.8927,
+        "Bias": 0.0114
+      },
+      "ARX_coeffs_const_resLag_logPlag": [
+        -0.0101,
+        0.2816,
+        0.1144
+      ]
+    },
+    "M4_HGBR_Dynamic_UQ": {
+      "point": {
+        "RMSE": 0.0768,
+        "MAE": 0.0557,
+        "R2": 0.9195,
+        "Bias": 0.0078
+      },
+      "Split_CP": {
+        "Coverage": 0.8522,
+        "Mean_Width": 0.1971,
+        "Median_Width": 0.2102,
+        "Winkler_Score": 0.3454
+      },
+      "Local_Adaptive_CP": {
+        "Coverage": 0.8484,
+        "Mean_Width": 0.1878,
+        "Median_Width": 0.1877,
+        "Winkler_Score": 0.3173
+      },
+      "Raw_QR": {
+        "Coverage": 0.7497,
+        "Mean_Width": 0.169,
+        "Median_Width": 0.1648,
+        "Winkler_Score": 0.3289
+      },
+      "CQR": {
+        "Coverage": 0.8414,
+        "Mean_Width": 0.1917,
+        "Median_Width": 0.1881,
+        "Winkler_Score": 0.3063
+      },
+      "Mondrian_CQR": {
+        "Coverage": 0.8428,
+        "Mean_Width": 0.1934,
+        "Median_Width": 0.1935,
+        "Winkler_Score": 0.3036
+      },
+      "by_region": {
+        "GB": {
+          "point": {
+            "RMSE": 0.0796,
+            "MAE": 0.0598,
+            "R2": 0.8634,
+            "Bias": -0.0016
+          },
+          "Split_CP": {
+            "Coverage": 0.8407,
+            "Mean_Width": 0.2094,
+            "Median_Width": 0.2102,
+            "Winkler_Score": 0.3653
+          },
+          "Local_Adaptive_CP": {
+            "Coverage": 0.8222,
+            "Mean_Width": 0.1978,
+            "Median_Width": 0.1902,
+            "Winkler_Score": 0.3552
+          },
+          "CQR": {
+            "Coverage": 0.8053,
+            "Mean_Width": 0.1953,
+            "Median_Width": 0.1913,
+            "Winkler_Score": 0.35
+          },
+          "Mondrian_CQR": {
+            "Coverage": 0.829,
+            "Mean_Width": 0.2061,
+            "Median_Width": 0.2021,
+            "Winkler_Score": 0.3412
+          }
+        },
+        "AUS": {
+          "point": {
+            "RMSE": 0.074,
+            "MAE": 0.0517,
+            "R2": 0.8273,
+            "Bias": 0.0168
+          },
+          "Split_CP": {
+            "Coverage": 0.8633,
+            "Mean_Width": 0.1852,
+            "Median_Width": 0.2102,
+            "Winkler_Score": 0.3261
+          },
+          "Local_Adaptive_CP": {
+            "Coverage": 0.8737,
+            "Mean_Width": 0.1781,
+            "Median_Width": 0.1802,
+            "Winkler_Score": 0.2806
+          },
+          "CQR": {
+            "Coverage": 0.8765,
+            "Mean_Width": 0.1882,
+            "Median_Width": 0.1811,
+            "Winkler_Score": 0.2639
+          },
+          "Mondrian_CQR": {
+            "Coverage": 0.8561,
+            "Mean_Width": 0.181,
+            "Median_Width": 0.1733,
+            "Winkler_Score": 0.2671
+          }
+        }
+      }
+    }
+  },
+  "S2_PUB_Spatial_CV": {
+    "n_test_total": 49929,
+    "M0_Global_Fu": {
+      "RMSE": 0.1192,
+      "MAE": 0.0842,
+      "R2": 0.7906,
+      "Bias": 0.0004
+    },
+    "M3_HGBR_PUB_point": {
+      "RMSE": 0.1063,
+      "MAE": 0.0736,
+      "R2": 0.8335,
+      "Bias": 0.0007
+    },
+    "Split_CP": {
+      "Coverage": 0.9108,
+      "Mean_Width": 0.3144,
+      "Median_Width": 0.3393,
+      "Winkler_Score": 0.4716
+    },
+    "Local_Adaptive_CP": {
+      "Coverage": 0.9088,
+      "Mean_Width": 0.299,
+      "Median_Width": 0.3115,
+      "Winkler_Score": 0.448
+    },
+    "CQR": {
+      "Coverage": 0.9068,
+      "Mean_Width": 0.2934,
+      "Median_Width": 0.3002,
+      "Winkler_Score": 0.4366
+    },
+    "Mondrian_CQR": {
+      "Coverage": 0.905,
+      "Mean_Width": 0.2987,
+      "Median_Width": 0.3132,
+      "Winkler_Score": 0.4366
+    },
+    "by_region": {
+      "GB": {
+        "M0_Global_Fu": {
+          "RMSE": 0.1245,
+          "MAE": 0.0913,
+          "R2": 0.6651,
+          "Bias": 0.0107
+        },
+        "M3_HGBR_PUB_point": {
+          "RMSE": 0.1149,
+          "MAE": 0.0827,
+          "R2": 0.715,
+          "Bias": -0.0004
+        },
+        "Split_CP": {
+          "Coverage": 0.8918,
+          "Mean_Width": 0.3409,
+          "Median_Width": 0.3407,
+          "Winkler_Score": 0.5265
+        },
+        "Local_Adaptive_CP": {
+          "Coverage": 0.8846,
+          "Mean_Width": 0.3261,
+          "Median_Width": 0.324,
+          "Winkler_Score": 0.5158
+        },
+        "CQR": {
+          "Coverage": 0.8827,
+          "Mean_Width": 0.3203,
+          "Median_Width": 0.3153,
+          "Winkler_Score": 0.5014
+        },
+        "Mondrian_CQR": {
+          "Coverage": 0.913,
+          "Mean_Width": 0.359,
+          "Median_Width": 0.3538,
+          "Winkler_Score": 0.5006
+        }
+      },
+      "AUS": {
+        "M0_Global_Fu": {
+          "RMSE": 0.1139,
+          "MAE": 0.0774,
+          "R2": 0.6187,
+          "Bias": -0.0096
+        },
+        "M3_HGBR_PUB_point": {
+          "RMSE": 0.0974,
+          "MAE": 0.0648,
+          "R2": 0.7216,
+          "Bias": 0.0018
+        },
+        "Split_CP": {
+          "Coverage": 0.9292,
+          "Mean_Width": 0.2889,
+          "Median_Width": 0.3126,
+          "Winkler_Score": 0.4187
+        },
+        "Local_Adaptive_CP": {
+          "Coverage": 0.9321,
+          "Mean_Width": 0.2729,
+          "Median_Width": 0.2822,
+          "Winkler_Score": 0.3828
+        },
+        "CQR": {
+          "Coverage": 0.93,
+          "Mean_Width": 0.2674,
+          "Median_Width": 0.2684,
+          "Winkler_Score": 0.3743
+        },
+        "Mondrian_CQR": {
+          "Coverage": 0.8974,
+          "Mean_Width": 0.2407,
+          "Median_Width": 0.2389,
+          "Winkler_Score": 0.3749
+        }
+      }
+    }
+  },
+  "S3_Cross_Continent_OOD": {
+    "GB_to_AUS": {
+      "M0_Source_Fu": {
+        "RMSE": 0.1162,
+        "MAE": 0.0755,
+        "R2": 0.6035,
+        "Bias": -0.0262
+      },
+      "M3_HGBR_Transfer_UQ": {
+        "point": {
+          "RMSE": 0.3013,
+          "MAE": 0.2709,
+          "R2": -1.6658,
+          "Bias": 0.2464
+        },
+        "Split_CP": {
+          "Coverage": 0.2312,
+          "Mean_Width": 0.326,
+          "Median_Width": 0.326,
+          "Winkler_Score": 2.8402
+        },
+        "Local_Adaptive_CP": {
+          "Coverage": 0.3074,
+          "Mean_Width": 0.3996,
+          "Median_Width": 0.3883,
+          "Winkler_Score": 2.3444
+        },
+        "Raw_QR": {
+          "Coverage": 0.3454,
+          "Mean_Width": 0.45,
+          "Median_Width": 0.4548,
+          "Winkler_Score": 1.5858
+        },
+        "CQR": {
+          "Coverage": 0.4765,
+          "Mean_Width": 0.5388,
+          "Median_Width": 0.5437,
+          "Winkler_Score": 1.1473
+        }
+      }
+    },
+    "AUS_to_GB": {
+      "M0_Source_Fu": {
+        "RMSE": 0.125,
+        "MAE": 0.0918,
+        "R2": 0.6623,
+        "Bias": 0.0145
+      },
+      "M3_HGBR_Transfer_UQ": {
+        "point": {
+          "RMSE": 0.1484,
+          "MAE": 0.1134,
+          "R2": 0.5242,
+          "Bias": 0.0038
+        },
+        "Split_CP": {
+          "Coverage": 0.7175,
+          "Mean_Width": 0.2922,
+          "Median_Width": 0.2953,
+          "Winkler_Score": 0.7764
+        },
+        "Local_Adaptive_CP": {
+          "Coverage": 0.7601,
+          "Mean_Width": 0.3221,
+          "Median_Width": 0.3153,
+          "Winkler_Score": 0.7268
+        },
+        "Raw_QR": {
+          "Coverage": 0.807,
+          "Mean_Width": 0.3822,
+          "Median_Width": 0.3724,
+          "Winkler_Score": 0.6731
+        },
+        "CQR": {
+          "Coverage": 0.8466,
+          "Mean_Width": 0.4144,
+          "Median_Width": 0.4048,
+          "Winkler_Score": 0.6492
+        }
+      }
+    }
+  },
+  "S4_AUS_Millennium_Drought": {
+    "n_train_pre1997": 9577,
+    "n_cal_pre1997": 3473,
+    "Drought_1997_2009": {
+      "n_test": 6300,
+      "M1_PreDrought_Basin_Fu": {
+        "RMSE": 0.0922,
+        "MAE": 0.0677,
+        "R2": 0.7124,
+        "Bias": 0.043
+      },
+      "M4_HGBR_Dynamic_UQ": {
+        "point": {
+          "RMSE": 0.0704,
+          "MAE": 0.0494,
+          "R2": 0.8326,
+          "Bias": 0.0194
+        },
+        "Split_CP": {
+          "Coverage": 0.8916,
+          "Mean_Width": 0.1921,
+          "Median_Width": 0.2199,
+          "Winkler_Score": 0.3018
+        },
+        "Local_Adaptive_CP": {
+          "Coverage": 0.884,
+          "Mean_Width": 0.1738,
+          "Median_Width": 0.1596,
+          "Winkler_Score": 0.2557
+        },
+        "Raw_QR": {
+          "Coverage": 0.7244,
+          "Mean_Width": 0.1509,
+          "Median_Width": 0.1388,
+          "Winkler_Score": 0.2708
+        },
+        "CQR": {
+          "Coverage": 0.8827,
+          "Mean_Width": 0.1751,
+          "Median_Width": 0.1642,
+          "Winkler_Score": 0.2504
+        }
+      }
+    },
+    "PostDrought_2010_2021": {
+      "n_test": 5484,
+      "M1_PreDrought_Basin_Fu": {
+        "RMSE": 0.1,
+        "MAE": 0.0742,
+        "R2": 0.6937,
+        "Bias": 0.0461
+      },
+      "M4_HGBR_Dynamic_UQ": {
+        "point": {
+          "RMSE": 0.0838,
+          "MAE": 0.0593,
+          "R2": 0.7848,
+          "Bias": 0.0247
+        },
+        "Split_CP": {
+          "Coverage": 0.8341,
+          "Mean_Width": 0.195,
+          "Median_Width": 0.2199,
+          "Winkler_Score": 0.3775
+        },
+        "Local_Adaptive_CP": {
+          "Coverage": 0.8184,
+          "Mean_Width": 0.1832,
+          "Median_Width": 0.1741,
+          "Winkler_Score": 0.3342
+        },
+        "Raw_QR": {
+          "Coverage": 0.6605,
+          "Mean_Width": 0.1591,
+          "Median_Width": 0.153,
+          "Winkler_Score": 0.3546
+        },
+        "CQR": {
+          "Coverage": 0.8149,
+          "Mean_Width": 0.1833,
+          "Median_Width": 0.1786,
+          "Winkler_Score": 0.3164
+        }
+      }
+    }
+  }
+}
