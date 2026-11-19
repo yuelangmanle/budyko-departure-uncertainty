@@ -109,7 +109,7 @@ def make_fig1_workflow(out_dir):
     for x_r in [6.15, 7.35, 8.55]:
         ax_a.annotate("", xy=(x_r, 3.08), xytext=(x_r, 4.25), arrowprops=dict(arrowstyle="->,head_width=0.18", lw=1.4, color=C_BLUE))
         ax_a.annotate("", xy=(x_r + 0.38, 4.35), xytext=(x_r + 0.38, 3.08), arrowprops=dict(arrowstyle="->,head_width=0.18", lw=1.4, color=C_RED, ls="--"))
-    ax_a.text(7.54, 4.52, "Summer P_t & ET0_t in Phase\n(Descriptive Seasonality SI_WL > 0.26)", ha="center", fontsize=6.5, fontweight="bold", color="#9C4221")
+    ax_a.text(7.54, 4.52, "Summer P_t & E_{p,t} in Phase\n(Descriptive Seasonality SI_WL > 0.26)", ha="center", fontsize=6.5, fontweight="bold", color="#9C4221")
     ax_a.text(7.54, 2.32, "Fast Within-Year Depletion\n(Delta S_t ~ 0)", ha="center", fontsize=6.6, fontweight="bold", color="#744210")
     ax_a.text(7.54, 0.78, "Annual Closure: Q_t/P_t ~ B(AI_t)\nPlains Regional Coverage = 93.6% (n=36)", ha="center", fontsize=6.4,
               bbox=dict(boxstyle="round,pad=0.18", facecolor="white", edgecolor=C_ORANGE, lw=0.9))
@@ -128,14 +128,14 @@ def make_fig1_workflow(out_dir):
     q_ijs_vis = q_c_vis * np.sqrt(1.0 + 1.8 * np.maximum(0, ai_x - 0.85)) + 0.16 * (1.0 / (1.0 + np.exp(-(ai_x - 0.95) * 4.5)))
 
     ax_b.fill_between(ai_x, surrogate_curve - q_ijs_vis, surrogate_curve + q_ijs_vis, color=C_TEAL, alpha=0.24, label="Reduced Pi* + IJS-CP (97.1% Cov, IS=0.764)")
-    ax_b.fill_between(ai_x, surrogate_curve - q_r_vis, surrogate_curve + q_r_vis, color=C_BLUE, alpha=0.18, label="Raw (P, ET0) + Std-CP (Wide q_raw = 0.340)")
-    ax_b.fill_between(ai_x, surrogate_curve - q_c_vis, surrogate_curve + q_c_vis, color=C_RED, alpha=0.38, label="Reduced Pi* + Std-CP (Compressed q_comp = 0.214)")
+    ax_b.fill_between(ai_x, surrogate_curve - q_r_vis, surrogate_curve + q_r_vis, color=C_BLUE, alpha=0.18, label="Raw (P, E_p) + Std-CP (Wide q_raw = 0.347)")
+    ax_b.fill_between(ai_x, surrogate_curve - q_c_vis, surrogate_curve + q_c_vis, color=C_RED, alpha=0.38, label="Reduced Pi* + Std-CP (Compressed q_comp = 0.208)")
 
     ax_b.plot(ai_x, true_curve, color="black", lw=2.3, label="True Shifted Process M*(Pi*) + Carry-Over")
     ax_b.plot(ai_x, surrogate_curve, color=C_RED, ls="--", lw=1.9, label="In-Domain Trained Surrogate f_hat(Pi*)")
 
     ax_b.annotate(
-        "Proposition 1 (Order-Stat Quantiles):\nPhysical completion shrinks ID\ncalibration quantile by 37%–48%\n(q_m0h=0.170, q_comp=0.214 < q_raw=0.340)",
+        "Proposition 1 (Order-Stat Quantiles):\nPhysical completion shrinks ID\ncalibration quantile by 37%–48%\n(q_m0h=0.170, q_comp=0.208 < q_raw=0.347)",
         xy=(0.56, surrogate_curve[42] + q_c_vis), xytext=(0.32, 0.06),
         fontsize=6.6, fontweight="bold", color=C_NAVY,
         bbox=dict(boxstyle="round,pad=0.20", facecolor="white", edgecolor=C_BLUE),
@@ -150,7 +150,7 @@ def make_fig1_workflow(out_dir):
     )
     ax_b.set_xlim(0.30, 2.40)
     ax_b.set_ylim(0.0, 1.02)
-    ax_b.set_xlabel("Dimensionless Aridity Coordinate AI = ET0 / P (-)")
+    ax_b.set_xlabel("Dimensionless Aridity Coordinate AI = E_p / P (-)")
     ax_b.set_ylabel("Runoff Response Q / P (-)")
     ax_b.set_title("(b) Mathematical Mechanism: ID Compression vs. OOD Under-Coverage", loc="left", pad=6)
     ax_b.legend(loc="upper right", fontsize=6.5, framealpha=0.94)
@@ -180,15 +180,15 @@ def make_fig1_workflow(out_dir):
         "", xy=p_ood, xytext=p_proj,
         arrowprops=dict(arrowstyle="->,head_width=0.28,head_length=0.26", lw=2.3, color=C_RED)
     )
-    ax_c.text(1.24, 0.30, r"Path Integral $\left|\int_{\Pi_{\mathrm{proj}}}^{\Pi} \nabla \mathcal{M}_0(\mathbf{u})\,\mathrm{d}\mathbf{u}\right|$",
+    ax_c.text(1.24, 0.30, r"Analytical Drift $|M_0(\Pi) - M_0(\Pi_{\mathrm{proj}})|$",
               rotation=15, fontsize=7.2, fontweight="bold", color="#9B2C2C",
               bbox=dict(boxstyle="round,pad=0.16", facecolor="white", edgecolor=C_RED, alpha=0.92))
 
     ax_c.text(
         0.86, -0.33,
-        "Proposition 3 (Tuning-Free IJS-CP Heuristic):\n"
+        "Tuning-Free IJS-CP Adjustment:\n"
         "Delta_M(Pi) = |M0(Pi) - M0(Pi_proj)| >= 0\n"
-        "q_IJS = q_Pi*sqrt(1 + excess_d) + excess_Delta_M",
+        "q_IJS = q_Pi*sqrt(1 + [d_tilde - 1]_+) + [Delta_M - Delta_M,cal]_+",
         fontsize=6.8, fontweight="bold", color="#1A202C",
         bbox=dict(boxstyle="round,pad=0.22", facecolor="#FFFFF0", edgecolor=C_TEAL, lw=1.2)
     )
@@ -196,7 +196,7 @@ def make_fig1_workflow(out_dir):
     ax_c.set_ylim(-0.38, 0.55)
     ax_c.set_xlabel("Dimensionless Aridity Coordinate AI_t (-)")
     ax_c.set_ylabel("Antecedent Departure Coordinate Pi_{M,t} (-)")
-    ax_c.set_title("(c) Tuning-Free Heuristic: Jacobian Manifold Transport", loc="left", pad=6)
+    ax_c.set_title("(c) Tuning-Free Analytical Baseline-Drift Adjustment", loc="left", pad=6)
     ax_c.legend(loc="upper left", fontsize=6.8, framealpha=0.92)
 
     ax_d = fig.add_subplot(gs[1, 1])
@@ -218,7 +218,7 @@ def make_fig1_workflow(out_dir):
          "  by 21.8% on Pure 60-Direct Refit (0.2687 -> 0.2100, IJS 95.1% Cov, IS=0.841)."),
         (0.08, "#FAF5FF", C_PURPLE,
          "SCENARIO 3: Strictly Causal Temporal Split (2005–2015 -> 2016–2024, n=545)",
-         "• Fit-Isolated Protocol: Uses idx_fh (n=200, <=2015) only; OLS c_M=+0.875, c_D=-0.186\n"
+         "• Fit-Isolated Protocol: Frozen <=2015 humid fit (n=200); OLS c_M=+0.875, c_D=-0.186\n"
          "• Result: S3B Pure Met (RMSE=0.2183 vs Raw 0.2355 [-7.3%] & AI 0.3422 [-36.2%]);\n"
          "  S3A OLS M0_hyst achieves RMSE=0.1106 (vs 0.1139 Persistence) with 96.1% Jac-CP Cov."),
     ]
@@ -231,7 +231,7 @@ def make_fig1_workflow(out_dir):
         ax_d.text(0.28, y0 + 1.18, t_body, ha="left", va="top", fontsize=6.9, color="#1A202C", linespacing=1.22)
 
     fig.suptitle(
-        "Figure 1 | Physical Mechanism, Quantile Compression, Jacobian Manifold Transport, and Three-Scenario Validation (108 USGS Basins)",
+        "Figure 1 | Physical Mechanism, Quantile Compression, Analytical Baseline-Drift Adjustment, and Three-Scenario Validation (108 USGS Basins)",
         fontsize=11.0, fontweight="bold", y=0.98
     )
     path = os.path.join(os.path.dirname(out_dir), "figures", "fig1_framework.png")
@@ -438,7 +438,7 @@ def make_fig2_spatial_and_process(out_dir):
         arrowprops=dict(arrowstyle="->", lw=1.1, color=C_BLUE)
     )
     ax_mem.annotate(
-        "High-Departure Regime (|Pi_M| > 0.120)\n60-Direct rho=0.577 | 48-IDW rho=0.579\nMatched F2 Asymmetry Tests:\n• Basin-w_i: rho = -0.244 vs Null -0.008\n• 60-Direct OOD: rho_wi = -0.273 vs Null -0.012",
+        "High-Departure Regime (|Pi_M| > 0.120)\n60-Direct rho=0.577 | 48-IDW rho=0.579\nMatched Null Asymmetry Tests:\n• Basin-w_i: rho = -0.244 vs Null -0.008\n• 60-Direct OOD: rho_wi = -0.273 vs Null -0.012",
         xy=(0.28, 0.34), xytext=(0.140, 0.45),
         fontsize=6.2, fontweight="bold", color="#9B2C2C",
         bbox=dict(boxstyle="round,pad=0.18", facecolor=C_LIGHT_RED, edgecolor=C_RED),
@@ -587,7 +587,7 @@ def make_fig3_phase_and_hydrographs(out_dir):
     cbar_ph.set_label("Mean Error |Q/P - f(AI)|")
     ax_ph.set_xlim(0.35, 2.8)
     ax_ph.set_ylim(0.0, 0.58)
-    ax_ph.set_xlabel("Climatic Aridity Index AI = ET0 / P (-)")
+    ax_ph.set_xlabel("Climatic Aridity Index AI = E_p / P (-)")
     ax_ph.set_ylabel(r"Antecedent Budyko Departure $|\Pi_M|$ (-)")
     ax_ph.set_title("(a) 2D Phase Diagram in (AI, |Pi_M|) Space")
     ax_ph.legend(loc="upper right", fontsize=7.2, framealpha=0.92)
@@ -595,15 +595,18 @@ def make_fig3_phase_and_hydrographs(out_dir):
     ax_kd = fig.add_subplot(gs[1, 0])
     X_raw_id = np.array([[r["P"], r["Ep"]] for r in id_recs])
     m_raw = GradientBoostingRegressor(n_estimators=100, max_depth=3, random_state=42).fit(X_raw_id[idx_f], y_id[idx_f])
-    res_raw_cal = np.abs(y_id[idx_c] - m_raw.predict(X_raw_id[idx_c]))
-    res_pi1_cal = np.abs(y_id[idx_c] - m_pi1.predict(X_pi1_id[idx_c]))
-    res_pi3_cal = np.abs(y_id[idx_c] - m_pi3.predict(X_pi3_id[idx_c]))
+    res_raw_cal = np.abs(y_id[idx_c] - np.clip(m_raw.predict(X_raw_id[idx_c]), 0, 1))
+    res_pi1_cal = np.abs(y_id[idx_c] - np.clip(m_pi1.predict(X_pi1_id[idx_c]), 0, 1))
+    res_pi3_cal = np.abs(y_id[idx_c] - np.clip(m_pi3.predict(X_pi3_id[idx_c]), 0, 1))
+    q_pi1 = conformal_order_quantile(res_pi1_cal, 0.10)
+    q_pi3 = conformal_order_quantile(res_pi3_cal, 0.10)
+    print(f"Fig3b Quantiles -> q_comp={q_pi3:.3f}, q_inc={q_pi1:.3f}, q_raw={conformal_order_quantile(res_raw_cal, 0.10):.3f}")
     q_raw_cal = conformal_order_quantile(res_raw_cal, 0.10)
 
     xg = np.linspace(0, 0.48, 300)
     for arr, col, lbl, qv in [
         (res_pi1_cal, C_ORANGE, f"Steady Pi (AI): q_inc = {q_pi1:.3f}", q_pi1),
-        (res_raw_cal, C_BLUE, f"Raw (P, ET0): q_raw = {q_raw_cal:.3f}", q_raw_cal),
+        (res_raw_cal, C_BLUE, f"Raw (P, E_p): q_raw = {q_raw_cal:.3f}", q_raw_cal),
         (res_pi3_cal, C_RED, f"Reduced Pi* (+Pi_M): q_comp = {q_pi3:.3f}", q_pi3),
     ]:
         kde = gaussian_kde(arr, bw_method=0.35)

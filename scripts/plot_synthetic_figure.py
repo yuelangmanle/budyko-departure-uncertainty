@@ -738,10 +738,10 @@ def make_fig5_benchmarks_and_generality(out_dir):
         ax.plot(xv, y_dsa, marker="o", markersize=6, ls="-", lw=2.2, color=C_TEAL, label=r"$\pi$ + Sublinear DSA-CP")
         ax.axhline(90.0, color=C_NAVY, ls=":", lw=1.4, label="90% Target")
         for i, val in enumerate(y_dsa):
-            ax.text(i, val - 10.5 if val > 85 else val + 4.0, f"{val:.0f}%", ha="center", fontsize=7.6, fontweight="bold", color="#00684A")
+            ax.text(i + (0.06 if i == 0 else 0.0), val + 3.5, f"{val:.0f}%", ha="left" if i == 0 else "center", fontsize=7.4, fontweight="bold", color="#00684A")
         ax.set_xlabel(xlabel)
         ax.set_ylabel("OOD2 Coverage (%)")
-        ax.set_ylim(-5, 112)
+        ax.set_ylim(-5, 116)
         ax.set_title(title)
         ax.grid(alpha=0.3)
         if sw == "k_neighbors":
