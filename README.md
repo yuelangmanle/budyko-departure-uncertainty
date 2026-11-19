@@ -3,7 +3,7 @@
 Code, processed observational dataset, benchmark tables, and figure scripts accompanying the manuscript:
 
 > **Antecedent Budyko Departure, Inter-Annual Runoff Asymmetry, and Predictive Uncertainty Across 108 Temperate Catchments**  
-> Zijie Deng¹, Yu Xia¹*, Jiyang Yu¹, Zhenyu Liao²  
+> Zijie Deng¹*, Yu Xia¹, Jiyang Yu¹, Zhenyu Liao²  
 > ¹ Jiangxi Provincial Key Laboratory of Water Resources Allocation and Efficient Utilization, Jiangxi University of Water Resources and Electric Power, Nanchang 330099, China  
 > ² School of Geography and Environment, Jiangxi Normal University, Nanchang 330022, China
 
