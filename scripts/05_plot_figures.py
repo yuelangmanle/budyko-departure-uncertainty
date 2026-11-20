@@ -162,18 +162,24 @@ def make_fig1(attrs):
     gb = [r for r in attrs if r["region"] == "GB"]
     aus = [r for r in attrs if r["region"] == "AUS"]
 
-    fig, axes = plt.subplots(2, 2, figsize=(11.0, 8.2))
-    ax1, ax2, ax3, ax4 = axes.ravel()
+    fig = plt.figure(figsize=(11.2, 8.4))
+    # Symmetrical 2x2 grid: left column [0.07..0.46], right column [0.56..0.95] (exact alignment top & bottom!)
+    ax1 = fig.add_axes([0.07, 0.56, 0.355, 0.38])
+    cax1 = fig.add_axes([0.435, 0.56, 0.014, 0.38])
+    ax2 = fig.add_axes([0.56, 0.56, 0.355, 0.38])
+    cax2 = fig.add_axes([0.925, 0.56, 0.014, 0.38])
+    ax3 = fig.add_axes([0.07, 0.08, 0.38, 0.38])
+    ax4 = fig.add_axes([0.56, 0.08, 0.38, 0.38])
 
-    # (a) GB spatial map (corrected high-latitude aspect ratio)
+    # (a) GB spatial map (true geographic aspect ratio, box locked to exact grid alignment)
     gb_lon = np.array([float(r["lon"]) for r in gb])
     gb_lat = np.array([float(r["lat"]) for r in gb])
     gb_ai = np.array([float(r["long_term_AI"]) for r in gb])
     draw_basemap(ax1, {"GBR"}, xlim=(-10.8, 4.4), ylim=(49.6, 59.2), draw_states=False)
     sc1 = ax1.scatter(gb_lon, gb_lat, c=gb_ai, cmap="YlGnBu_r", s=17, vmin=0.12, vmax=0.95, alpha=0.90, edgecolors="#222222", linewidths=0.18, zorder=4)
-    cb1 = plt.colorbar(sc1, ax=ax1, fraction=0.045, pad=0.03)
-    cb1.set_label(r"Long-term $AI = \overline{PET}/\overline{P}$")
-    ax1.set_aspect(1.0 / math.cos(math.radians(54.0)))
+    cb1 = plt.colorbar(sc1, cax=cax1)
+    cb1.set_label(r"Long-term $AI = \overline{PET}/\overline{P}$", fontsize=8.4)
+    ax1.set_aspect(1.0 / math.cos(math.radians(54.0)), adjustable="datalim")
     ax1.grid(True, ls=":", color="#CCCCCC", alpha=0.7)
     ax1.set_xlabel("Longitude (°E)")
     ax1.set_ylabel("Latitude (°N)")
@@ -185,16 +191,16 @@ def make_fig1(attrs):
     aus_ai = np.array([float(r["long_term_AI"]) for r in aus])
     draw_basemap(ax2, {"AUS"}, xlim=(111.5, 155.5), ylim=(-44.8, -9.8), draw_states=True)
     sc2 = ax2.scatter(aus_lon, aus_lat, c=np.clip(aus_ai, 0.3, 4.0), cmap="inferno_r", s=17, vmin=0.3, vmax=4.0, alpha=0.90, edgecolors="#222222", linewidths=0.18, zorder=4)
-    cb2 = plt.colorbar(sc2, ax=ax2, fraction=0.045, pad=0.03)
-    cb2.set_label(r"Long-term $AI$ (capped at 4.0)")
+    cb2 = plt.colorbar(sc2, cax=cax2)
+    cb2.set_label(r"Long-term $AI$ (capped at 4.0)", fontsize=8.4)
     rect = Rectangle((138.0, -39.2), 16.0, 7.2, lw=1.3, ls="--", edgecolor=C_BLUE, facecolor="none", zorder=5)
     ax2.add_patch(rect)
     ax2.text(146.0, -30.8, "Mainland SE AUS\n(Vic / MDB)", color=C_BLUE, fontsize=7.3, ha="center", fontweight="bold",
-             bbox=dict(facecolor="white", edgecolor="none", alpha=0.72, pad=1.0), zorder=6)
+             bbox=dict(facecolor="white", edgecolor="none", alpha=0.75, pad=1.0), zorder=6)
     ax2.axhline(-25.0, color=C_GREEN, ls=":", lw=1.1, zorder=3)
     ax2.text(123.0, -23.5, "Northern Tropical (lat > -25°)", color=C_GREEN, fontsize=7.2, fontweight="bold",
-             bbox=dict(facecolor="white", edgecolor="none", alpha=0.72, pad=1.0), zorder=6)
-    ax2.set_aspect(1.0 / math.cos(math.radians(-28.0)))
+             bbox=dict(facecolor="white", edgecolor="none", alpha=0.75, pad=1.0), zorder=6)
+    ax2.set_aspect(1.0 / math.cos(math.radians(-28.0)), adjustable="datalim")
     ax2.grid(True, ls=":", color="#CCCCCC", alpha=0.7)
     ax2.set_xlabel("Longitude (°E)")
     ax2.set_ylabel("Latitude (°N)")
@@ -239,8 +245,7 @@ def make_fig1(attrs):
     ax4.set_title("(d) Kernel Density Contours of Climate–Storage Regimes")
     ax4.legend(loc="upper right", frameon=True, framealpha=0.92)
 
-    fig.tight_layout()
-    fig.savefig(os.path.join(FIG_DIR, "Fig1.png"))
+    fig.savefig(os.path.join(FIG_DIR, "Fig1.png"), bbox_inches="tight", pad_inches=0.08)
     plt.close(fig)
 
 
