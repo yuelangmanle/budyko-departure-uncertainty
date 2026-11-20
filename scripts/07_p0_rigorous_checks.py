@@ -102,14 +102,24 @@ def main():
         w_i = fit_omega(np.array([np.sum(PET) / np.sum(P)]), np.array([np.sum(Q) / np.sum(P)]))
         dq = Q - P * fu_rr(AI, w_i)
 
-        # Contemporary-only memoryless regression g_i(P_t, PET_t) -> dq_hat (preserves ALL climate autocorr!)
-        # Design matrix: [1, P_z, P_z^2, PET_z]
-        pz = (P - np.mean(P)) / max(np.std(P), 1e-6)
-        petz = (PET - np.mean(PET)) / max(np.std(PET), 1e-6)
-        X_clim = np.column_stack([np.ones_like(pz), pz, pz ** 2, petz])
-        beta, *_ = np.linalg.lstsq(X_clim, dq, rcond=None)
-        dq_clim_only = X_clim @ beta           # memoryless climate-driven component
-        dq_clim_resid = dq - dq_clim_only      # residual orthogonal to contemporary (P_t, P_t^2, PET_t)
+        # Strictly out-of-sample 5-fold contiguous time-block cross-fitting for memoryless g_i(P_t, P_t^2, PET_t)
+        n_yr = len(rows)
+        dq_clim_only = np.zeros(n_yr)
+        dq_clim_resid = np.zeros(n_yr)
+        folds = np.array_split(np.arange(n_yr), 5)
+        for f_idx in folds:
+            tr_mask = np.ones(n_yr, dtype=bool)
+            tr_mask[f_idx] = False
+            mu_p, sd_p = float(np.mean(P[tr_mask])), max(float(np.std(P[tr_mask])), 1e-6)
+            mu_e, sd_e = float(np.mean(PET[tr_mask])), max(float(np.std(PET[tr_mask])), 1e-6)
+            def design(p_arr, e_arr):
+                pz_ = (p_arr - mu_p) / sd_p
+                ez_ = (e_arr - mu_e) / sd_e
+                return np.column_stack([np.ones_like(pz_), pz_, pz_ ** 2, ez_])
+            beta, *_ = np.linalg.lstsq(design(P[tr_mask], PET[tr_mask]), dq[tr_mask], rcond=None)
+            pred_oos = design(P[f_idx], PET[f_idx]) @ beta
+            dq_clim_only[f_idx] = pred_oos
+            dq_clim_resid[f_idx] = dq[f_idx] - pred_oos
 
         # Extract consecutive lag-1 pairs
         p_mean = float(np.mean(P))

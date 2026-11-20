@@ -228,7 +228,8 @@ def make_fig2(attrs, diag, rho_map):
     ax1.set_ylabel(r"Catchment Lag-1 Residual Autocorrelation ($\rho_1$)")
     ax1.set_title("(a) Distribution of Within-Basin Memory & Between-Basin ICC")
 
-    # (b) Dumbbell / Decomposition Chart: Algebraic Null (Theorem 1 vs MC) -> Observed -> Antecedent Carry-Over
+    # (b) Dumbbell / Decomposition Chart: Theorem 1 vs MC vs Cross-Fitted Climate Null & 95% CI
+    p0 = json.load(open(os.path.join(RES_DIR, "p0_rigorous_checks.json"), encoding="utf-8"))["ClimatePreserving_Null_and_BasinBootstrap"]
     keys = ["ALL_1202", "GB_644", "AUS_558", "NEAR_NATURAL_869", "AUS_JulJun_WaterYear_Sensitivity"]
     ylabs = ["All Catchments\n(n = 1,202)", "Great Britain\n(n = 644)", "Australia\n(Apr–Mar, 558)", "Near-Natural\n(n = 869)", "Australia\n(Jul–Jun sens.)"]
     y = np.arange(len(keys))
@@ -239,33 +240,42 @@ def make_fig2(attrs, diag, rho_map):
             mc = eu
             obs = eu + diag[k]["test_B_excess_physical_dq_mm"]
             ant = diag[k]["test_A_wet_minus_dry_dq_mm"]
+            ant_ci = None
+            clim_null_a = None
         else:
             tb = diag[k]["test_B_euler_theorem_vs_mc_null"]
             eu = tb["euler_closed_form_null_dq_mm"]
             mc = tb["mc_null_mean_dq_mm"]
             obs = tb["obs_drying_minus_wetting_dq_mm"]
-            ant = diag[k]["test_A_antecedent_only_zero_shared_Pt"]["wet_minus_dry_dq_mm"]
+            ant = p0[k]["TestA_climate_residualized_mm"]
+            ant_ci = p0[k]["TestA_climate_residualized_boot95CI"]
+            clim_null_a = p0[k]["TestA_climate_preserving_null_mm"]
 
-        # Connect algebraic null -> observed (the span IS the excess physical transition asymmetry!)
         ax2.plot([eu, obs], [i, i], color=C_ORANGE, lw=3.2, alpha=0.85, zorder=2,
-                 label="Excess physical transition asymmetry" if i == 0 else None)
-        ax2.scatter(mc, i, s=68, color="#999999", marker="o", zorder=3,
+                 label="Excess transition asymmetry (Test B)" if i == 0 else None)
+        ax2.scatter(mc, i, s=66, color="#999999", marker="o", zorder=3,
                     label="200-iter. MC permutation null" if i == 0 else None)
-        ax2.scatter(eu, i, s=38, color=C_DARK, marker="D", zorder=4,
+        ax2.scatter(eu, i, s=36, color=C_DARK, marker="D", zorder=4,
                     label=r"Theorem 1: $-4\,\mathrm{Cov}(\Delta Q, F_P(P))$" if i == 0 else None)
-        ax2.scatter(obs, i, s=68, color=C_ORANGE, marker="s", edgecolors=C_DARK, linewidths=0.5, zorder=4,
-                    label="Observed drying − wetting transition" if i == 0 else None)
-        ax2.scatter(ant, i - 0.19, s=52, color=C_BLUE, marker="^", zorder=5,
-                    label=r"Test A: zero-shared-$P_t$ ($P_{t-1}$)" if i == 0 else None)
-        y_txt = i - 0.11 if i == 3 else i + 0.24
-        ax2.text((eu + obs) / 2, y_txt, f"+{obs - eu:.1f}", ha="center", va="center", fontsize=7.3, color="#A63603", fontweight="bold")
+        ax2.scatter(obs, i, s=66, color=C_ORANGE, marker="s", edgecolors=C_DARK, linewidths=0.5, zorder=4,
+                    label="Observed drying − wetting (Test B)" if i == 0 else None)
+        if clim_null_a is not None:
+            ax2.scatter(clim_null_a, i - 0.21, s=44, facecolors="white", edgecolors=C_PURPLE, linewidths=1.4, marker="o", zorder=5,
+                        label="Cross-fitted climate null (Test A)" if i == 0 else None)
+        if ant_ci is not None:
+            ax2.errorbar(ant, i - 0.21, xerr=[[ant - ant_ci[0]], [ant_ci[1] - ant]], fmt="^", color=C_BLUE,
+                         ecolor=C_BLUE, elinewidth=1.2, capsize=2.5, ms=6.0, zorder=5,
+                         label="Cross-fitted Test A resid. (95% CI)" if i == 0 else None)
+        else:
+            ax2.scatter(ant, i - 0.21, s=50, color=C_BLUE, marker="^", zorder=5)
+        ax2.text((eu + obs) / 2, i + 0.25, f"+{obs - eu:.1f}", ha="center", va="center", fontsize=7.2, color="#A63603", fontweight="bold")
 
     ax2.axvline(0.0, color="#666666", ls=":", lw=0.9)
     ax2.set_yticks(y); ax2.set_yticklabels(ylabs); ax2.invert_yaxis()
-    ax2.set_xlim(-6, 63); ax2.set_ylim(5.45, -0.55)
+    ax2.set_xlim(-7, 63); ax2.set_ylim(5.65, -0.58)
     ax2.set_xlabel(r"Runoff Anomaly Difference ($\mathrm{mm\ yr}^{-1}$)")
-    ax2.set_title("(b) Analytical Decomposition of Algebraic Null vs. Physical Carry-Over")
-    ax2.legend(loc="lower center", ncol=2, frameon=True, framealpha=0.96, fontsize=6.6, handlelength=1.6, columnspacing=0.9)
+    ax2.set_title("(b) Analytical Null, Cross-Fitted Climate Null & Carry-Over")
+    ax2.legend(loc="lower center", ncol=2, frameon=True, framealpha=0.96, fontsize=6.4, handlelength=1.6, columnspacing=0.8)
 
     fig.tight_layout()
     fig.savefig(os.path.join(FIG_DIR, "Fig2.png"))
