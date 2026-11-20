@@ -40,8 +40,8 @@ plt.rcParams.update({
     "axes.spines.top": False,
     "axes.spines.right": False,
     "axes.linewidth": 0.9,
-    "figure.dpi": 300,
-    "savefig.dpi": 300,
+    "figure.dpi": 600,
+    "savefig.dpi": 600,
     "savefig.bbox": "tight",
 })
 
