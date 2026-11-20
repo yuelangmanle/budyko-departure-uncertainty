@@ -22,7 +22,7 @@ from scipy.optimize import minimize_scalar
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "data")
 RES_DIR = os.path.join(ROOT, "results")
-AUS_RAW = os.environ.get("CAMELS_AUS_DIR", os.path.join(ROOT, "raw_data", "camels_aus_v2.03"))
+AUS_RAW = "./data/raw/camels_aus_v2.03"
 os.makedirs(RES_DIR, exist_ok=True)
 
 

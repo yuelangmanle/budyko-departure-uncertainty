@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Polygon
 from matplotlib.collections import PatchCollection, LineCollection
 
-ROOT = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "data")
 RES_DIR = os.path.join(ROOT, "results")
 FIG_DIR = os.path.join(ROOT, "figures")
@@ -169,7 +169,7 @@ def make_fig1(attrs):
     gb_lon = np.array([float(r["lon"]) for r in gb])
     gb_lat = np.array([float(r["lat"]) for r in gb])
     gb_ai = np.array([float(r["long_term_AI"]) for r in gb])
-    draw_basemap(ax1, {"GBR"}, xlim=(-6.8, 2.2), ylim=(49.6, 59.2), draw_states=False)
+    draw_basemap(ax1, {"GBR"}, xlim=(-10.8, 4.4), ylim=(49.6, 59.2), draw_states=False)
     sc1 = ax1.scatter(gb_lon, gb_lat, c=gb_ai, cmap="YlGnBu_r", s=17, vmin=0.12, vmax=0.95, alpha=0.90, edgecolors="#222222", linewidths=0.18, zorder=4)
     cb1 = plt.colorbar(sc1, ax=ax1, fraction=0.045, pad=0.03)
     cb1.set_label(r"Long-term $AI = \overline{PET}/\overline{P}$")
@@ -277,7 +277,7 @@ def make_fig2(attrs, diag, rho_map):
     ax1.set_title("(a) Distribution of Within-Basin Memory & Between-Basin ICC")
 
     # (b) Dumbbell / Decomposition Chart: Theorem 1 vs MC vs Cross-Fitted Climate Null & 95% CI
-    p0 = json.load(open(os.path.join(RES_DIR, "p0_rigorous_checks.json"), encoding="utf-8"))["ClimatePreserving_Null_and_BasinBootstrap"]
+    p0 = json.load(open(os.path.join(RES_DIR, "crossfit_null_and_transfer.json"), encoding="utf-8"))["ClimatePreserving_Null_and_BasinBootstrap"]
     keys = ["ALL_1202", "GB_644", "AUS_558", "NEAR_NATURAL_869", "AUS_JulJun_WaterYear_Sensitivity"]
     ylabs = ["All Catchments\n(n = 1,202)", "Great Britain\n(n = 644)", "Australia\n(Apr–Mar, 558)", "Near-Natural\n(n = 869)", "Australia\n(Jul–Jun sens.)"]
     y = np.arange(len(keys))
@@ -604,7 +604,7 @@ def main():
     attrs = list(csv.DictReader(open(os.path.join(DATA_DIR, "gb_aus_basin_attributes.csv"), encoding="utf-8")))
     diag = json.load(open(os.path.join(RES_DIR, "diagnostics_upgraded.json"), encoding="utf-8"))
     rho_map = json.load(open(os.path.join(RES_DIR, "basin_rho1_map.json"), encoding="utf-8"))
-    m3_base = json.load(open(os.path.join(RES_DIR, "milestone3_modeling_uq.json"), encoding="utf-8"))
+    m3_base = json.load(open(os.path.join(RES_DIR, "modeling_uq_summary.json"), encoding="utf-8"))
     m3_up = json.load(open(os.path.join(RES_DIR, "modeling_upgraded.json"), encoding="utf-8"))
 
     make_fig1(attrs)

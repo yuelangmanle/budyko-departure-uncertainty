@@ -19,7 +19,7 @@ import numpy as np
 from scipy.optimize import minimize_scalar
 from sklearn.ensemble import HistGradientBoostingRegressor
 
-ROOT = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "data")
 RES_DIR = os.path.join(ROOT, "results")
 SEED = 42
@@ -332,7 +332,7 @@ def main():
         "ClimatePreserving_Null_and_BasinBootstrap": clim_diag,
         "S3_GB_to_AUS_Unified_Split": s3_unified,
     }
-    out_path = os.path.join(RES_DIR, "p0_rigorous_checks.json")
+    out_path = os.path.join(RES_DIR, "crossfit_null_and_transfer.json")
     json.dump(out, open(out_path, "w", encoding="utf-8"), indent=2)
     print(json.dumps(out, indent=2))
 

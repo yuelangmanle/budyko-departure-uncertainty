@@ -6,67 +6,81 @@
     "n_lag1_pairs": 49929,
     "global_fu_omega": 3.0905,
     "variance_decomposition": {
-      "total_var": 0.0144,
       "between_basin_share_ICC": 0.5876,
       "within_basin_share": 0.4124
     },
-    "lag1_autocorrelation": {
+    "lag1_memory": {
       "pooled_global_departure_r": 0.6366,
-      "within_basin_demeaned_departure_r": 0.1205,
       "within_basin_fu_rr_residual_r": 0.2703,
       "within_basin_dq_mm_r": 0.3571,
-      "basin_level_median_rho1": 0.0693,
-      "basin_level_IQR_rho1": [
+      "pooled_relaxation_tau_years": 0.764,
+      "basin_median_rho1": 0.0693,
+      "basin_IQR_rho1": [
         -0.0782,
         0.231
       ],
-      "pct_basins_sig_positive_p05": 17.4
+      "pct_basins_sig_p05": 17.4,
+      "median_tau_years_mem_basins": 0.837
     },
-    "physical_drivers_of_memory": {
-      "BFI_vs_rho1": {
+    "physical_drivers_and_bfi_resolution": {
+      "raw_BFI_vs_rho1": {
         "rho": -0.3741,
         "p": 3.42e-41,
         "n": 1201
       },
-      "AI_vs_rho1": {
+      "partial_BFI_vs_rho1_given_AI": {
+        "rho": -0.4111,
+        "p": 3.61e-50,
+        "n": 1201
+      },
+      "partial_BFI_vs_rho1_given_Qcv": {
+        "rho": -0.4005,
+        "p": 1.78e-47,
+        "n": 1201
+      },
+      "raw_Qcv_vs_rho1": {
+        "rho": 0.0801,
+        "p": 0.0055,
+        "n": 1201
+      },
+      "raw_AI_vs_rho1": {
         "rho": 0.0474,
         "p": 0.101,
         "n": 1201
       },
-      "logArea_vs_rho1": {
-        "rho": -0.0723,
-        "p": 0.0122,
-        "n": 1201
-      },
-      "Forest_vs_rho1": {
+      "raw_Forest_vs_rho1": {
         "rho": 0.2368,
         "p": 8.95e-17,
+        "n": 1201
+      },
+      "partial_Forest_vs_rho1_given_AI": {
+        "rho": 0.2357,
+        "p": 1.27e-16,
+        "n": 1201
+      },
+      "raw_Clay_vs_rho1": {
+        "rho": -0.0616,
+        "p": 0.0329,
         "n": 1201
       }
     },
     "test_A_antecedent_only_zero_shared_Pt": {
-      "after_wet_P_mean_rr_res": 0.00131,
-      "after_dry_P_mean_rr_res": -0.03609,
       "wet_minus_dry_rr_res": 0.0374,
       "p_val_rr_res": 0.0,
-      "after_wet_P_mean_dq_mm": -2.67,
-      "after_dry_P_mean_dq_mm": -38.55,
       "wet_minus_dry_dq_mm": 35.88,
-      "p_val_dq_mm": 0.0,
-      "after_high_Qres_minus_low_Qres_rr_res": 0.02394,
-      "after_high_Qres_minus_low_Qres_dq_mm": 29.52,
-      "p_val_Qres_dq_mm": 6.29e-219
+      "p_val_dq_mm": 0.0
     },
-    "test_B_transition_vs_permutation_null": {
-      "obs_drying_minus_wetting_rr_res": 0.04109,
-      "null_mean_drying_minus_wetting_rr_res": 0.01667,
-      "null_sd_rr_res": 0.00056,
-      "excess_physical_asymmetry_rr_res": 0.02442,
-      "z_score_rr_res": 43.47,
+    "test_B_euler_theorem_vs_mc_null": {
       "obs_drying_minus_wetting_dq_mm": 42.63,
-      "null_mean_drying_minus_wetting_dq_mm": 17.66,
-      "excess_physical_asymmetry_dq_mm": 24.97,
-      "z_score_dq_mm": 38.13
+      "mc_null_mean_dq_mm": 17.66,
+      "euler_closed_form_null_dq_mm": 17.62,
+      "euler_vs_mc_abs_error_mm": 0.04,
+      "excess_physical_asymmetry_dq_mm": 25.01,
+      "z_score_dq_mm": 38.13,
+      "obs_drying_minus_wetting_rr_res": 0.04109,
+      "mc_null_mean_rr_res": 0.01667,
+      "euler_closed_form_null_rr_res": 0.01666,
+      "excess_physical_asymmetry_rr_res": 0.02442
     }
   },
   "GB_644": {
@@ -76,67 +90,81 @@
     "n_lag1_pairs": 24492,
     "global_fu_omega": 3.3789,
     "variance_decomposition": {
-      "total_var": 0.01551,
       "between_basin_share_ICC": 0.581,
       "within_basin_share": 0.419
     },
-    "lag1_autocorrelation": {
+    "lag1_memory": {
       "pooled_global_departure_r": 0.5955,
-      "within_basin_demeaned_departure_r": 0.0422,
       "within_basin_fu_rr_residual_r": 0.2936,
       "within_basin_dq_mm_r": 0.4995,
-      "basin_level_median_rho1": 0.0091,
-      "basin_level_IQR_rho1": [
+      "pooled_relaxation_tau_years": 0.816,
+      "basin_median_rho1": 0.0091,
+      "basin_IQR_rho1": [
         -0.1202,
         0.1925
       ],
-      "pct_basins_sig_positive_p05": 15.2
+      "pct_basins_sig_p05": 15.2,
+      "median_tau_years_mem_basins": 0.924
     },
-    "physical_drivers_of_memory": {
-      "BFI_vs_rho1": {
+    "physical_drivers_and_bfi_resolution": {
+      "raw_BFI_vs_rho1": {
         "rho": -0.3902,
         "p": 7.62e-25,
         "n": 644
       },
-      "AI_vs_rho1": {
+      "partial_BFI_vs_rho1_given_AI": {
+        "rho": -0.2691,
+        "p": 3.78e-12,
+        "n": 644
+      },
+      "partial_BFI_vs_rho1_given_Qcv": {
+        "rho": -0.3165,
+        "p": 1.88e-16,
+        "n": 644
+      },
+      "raw_Qcv_vs_rho1": {
+        "rho": -0.3698,
+        "p": 2.67e-22,
+        "n": 644
+      },
+      "raw_AI_vs_rho1": {
         "rho": -0.396,
         "p": 1.31e-25,
         "n": 644
       },
-      "logArea_vs_rho1": {
-        "rho": -0.1556,
-        "p": 7.35e-05,
-        "n": 644
-      },
-      "Forest_vs_rho1": {
+      "raw_Forest_vs_rho1": {
         "rho": 0.156,
         "p": 7.04e-05,
+        "n": 644
+      },
+      "partial_Forest_vs_rho1_given_AI": {
+        "rho": 0.0307,
+        "p": 0.436,
+        "n": 644
+      },
+      "raw_Clay_vs_rho1": {
+        "rho": -0.0734,
+        "p": 0.0627,
         "n": 644
       }
     },
     "test_A_antecedent_only_zero_shared_Pt": {
-      "after_wet_P_mean_rr_res": 0.00239,
-      "after_dry_P_mean_rr_res": -0.03686,
       "wet_minus_dry_rr_res": 0.03925,
       "p_val_rr_res": 7.03e-226,
-      "after_wet_P_mean_dq_mm": -7.23,
-      "after_dry_P_mean_dq_mm": -42.57,
       "wet_minus_dry_dq_mm": 35.34,
-      "p_val_dq_mm": 9.16e-139,
-      "after_high_Qres_minus_low_Qres_rr_res": 0.02632,
-      "after_high_Qres_minus_low_Qres_dq_mm": 38.95,
-      "p_val_Qres_dq_mm": 2.56e-184
+      "p_val_dq_mm": 9.16e-139
     },
-    "test_B_transition_vs_permutation_null": {
-      "obs_drying_minus_wetting_rr_res": 0.05864,
-      "null_mean_drying_minus_wetting_rr_res": 0.03517,
-      "null_sd_rr_res": 0.00097,
-      "excess_physical_asymmetry_rr_res": 0.02347,
-      "z_score_rr_res": 24.2,
+    "test_B_euler_theorem_vs_mc_null": {
       "obs_drying_minus_wetting_dq_mm": 55.51,
-      "null_mean_drying_minus_wetting_dq_mm": 33.45,
-      "excess_physical_asymmetry_dq_mm": 22.06,
-      "z_score_dq_mm": 20.99
+      "mc_null_mean_dq_mm": 33.45,
+      "euler_closed_form_null_dq_mm": 33.41,
+      "euler_vs_mc_abs_error_mm": 0.03,
+      "excess_physical_asymmetry_dq_mm": 22.1,
+      "z_score_dq_mm": 20.99,
+      "obs_drying_minus_wetting_rr_res": 0.05864,
+      "mc_null_mean_rr_res": 0.03517,
+      "euler_closed_form_null_rr_res": 0.03515,
+      "excess_physical_asymmetry_rr_res": 0.02349
     }
   },
   "AUS_558": {
@@ -146,67 +174,81 @@
     "n_lag1_pairs": 25437,
     "global_fu_omega": 2.9948,
     "variance_decomposition": {
-      "total_var": 0.01312,
       "between_basin_share_ICC": 0.5739,
       "within_basin_share": 0.4261
     },
-    "lag1_autocorrelation": {
+    "lag1_memory": {
       "pooled_global_departure_r": 0.6613,
-      "within_basin_demeaned_departure_r": 0.2011,
       "within_basin_fu_rr_residual_r": 0.2337,
       "within_basin_dq_mm_r": 0.1824,
-      "basin_level_median_rho1": 0.1223,
-      "basin_level_IQR_rho1": [
+      "pooled_relaxation_tau_years": 0.688,
+      "basin_median_rho1": 0.1223,
+      "basin_IQR_rho1": [
         -0.0053,
         0.2605
       ],
-      "pct_basins_sig_positive_p05": 19.9
+      "pct_basins_sig_p05": 19.9,
+      "median_tau_years_mem_basins": 0.795
     },
-    "physical_drivers_of_memory": {
-      "BFI_vs_rho1": {
+    "physical_drivers_and_bfi_resolution": {
+      "raw_BFI_vs_rho1": {
         "rho": -0.1738,
         "p": 3.71e-05,
         "n": 557
       },
-      "AI_vs_rho1": {
+      "partial_BFI_vs_rho1_given_AI": {
+        "rho": -0.1923,
+        "p": 4.85e-06,
+        "n": 557
+      },
+      "partial_BFI_vs_rho1_given_Qcv": {
+        "rho": -0.1037,
+        "p": 0.0143,
+        "n": 557
+      },
+      "raw_Qcv_vs_rho1": {
+        "rho": 0.1441,
+        "p": 0.000649,
+        "n": 557
+      },
+      "raw_AI_vs_rho1": {
         "rho": 0.028,
         "p": 0.51,
         "n": 557
       },
-      "logArea_vs_rho1": {
-        "rho": -0.1415,
-        "p": 0.000809,
-        "n": 557
-      },
-      "Forest_vs_rho1": {
+      "raw_Forest_vs_rho1": {
         "rho": 0.1242,
         "p": 0.00331,
+        "n": 557
+      },
+      "partial_Forest_vs_rho1_given_AI": {
+        "rho": 0.1771,
+        "p": 2.62e-05,
+        "n": 557
+      },
+      "raw_Clay_vs_rho1": {
+        "rho": 0.0368,
+        "p": 0.387,
         "n": 557
       }
     },
     "test_A_antecedent_only_zero_shared_Pt": {
-      "after_wet_P_mean_rr_res": 0.0002,
-      "after_dry_P_mean_rr_res": -0.03539,
       "wet_minus_dry_rr_res": 0.03559,
       "p_val_rr_res": 4.45e-311,
-      "after_wet_P_mean_dq_mm": 2.01,
-      "after_dry_P_mean_dq_mm": -34.92,
       "wet_minus_dry_dq_mm": 36.92,
-      "p_val_dq_mm": 9.05e-199,
-      "after_high_Qres_minus_low_Qres_rr_res": 0.02151,
-      "after_high_Qres_minus_low_Qres_dq_mm": 21.33,
-      "p_val_Qres_dq_mm": 3.37e-55
+      "p_val_dq_mm": 9.05e-199
     },
-    "test_B_transition_vs_permutation_null": {
-      "obs_drying_minus_wetting_rr_res": 0.02432,
-      "null_mean_drying_minus_wetting_rr_res": -0.00112,
-      "null_sd_rr_res": 0.00079,
-      "excess_physical_asymmetry_rr_res": 0.02544,
-      "z_score_rr_res": 32.13,
+    "test_B_euler_theorem_vs_mc_null": {
       "obs_drying_minus_wetting_dq_mm": 29.96,
-      "null_mean_drying_minus_wetting_dq_mm": 2.4,
-      "excess_physical_asymmetry_dq_mm": 27.56,
-      "z_score_dq_mm": 29.73
+      "mc_null_mean_dq_mm": 2.4,
+      "euler_closed_form_null_dq_mm": 2.41,
+      "euler_vs_mc_abs_error_mm": 0.0,
+      "excess_physical_asymmetry_dq_mm": 27.55,
+      "z_score_dq_mm": 29.73,
+      "obs_drying_minus_wetting_rr_res": 0.02432,
+      "mc_null_mean_rr_res": -0.00112,
+      "euler_closed_form_null_rr_res": -0.00114,
+      "excess_physical_asymmetry_rr_res": 0.02545
     }
   },
   "NEAR_NATURAL_869": {
@@ -216,67 +258,90 @@
     "n_lag1_pairs": 35406,
     "global_fu_omega": 3.0274,
     "variance_decomposition": {
-      "total_var": 0.01594,
       "between_basin_share_ICC": 0.5859,
       "within_basin_share": 0.4141
     },
-    "lag1_autocorrelation": {
+    "lag1_memory": {
       "pooled_global_departure_r": 0.6351,
-      "within_basin_demeaned_departure_r": 0.121,
       "within_basin_fu_rr_residual_r": 0.2458,
       "within_basin_dq_mm_r": 0.2846,
-      "basin_level_median_rho1": 0.0589,
-      "basin_level_IQR_rho1": [
+      "pooled_relaxation_tau_years": 0.713,
+      "basin_median_rho1": 0.0589,
+      "basin_IQR_rho1": [
         -0.0865,
         0.2221
       ],
-      "pct_basins_sig_positive_p05": 17.2
+      "pct_basins_sig_p05": 17.2,
+      "median_tau_years_mem_basins": 0.857
     },
-    "physical_drivers_of_memory": {
-      "BFI_vs_rho1": {
+    "physical_drivers_and_bfi_resolution": {
+      "raw_BFI_vs_rho1": {
         "rho": -0.4042,
         "p": 1.93e-35,
         "n": 868
       },
-      "AI_vs_rho1": {
+      "partial_BFI_vs_rho1_given_AI": {
+        "rho": -0.4241,
+        "p": 3.29e-39,
+        "n": 868
+      },
+      "partial_BFI_vs_rho1_given_Qcv": {
+        "rho": -0.417,
+        "p": 7.72e-38,
+        "n": 868
+      },
+      "raw_Qcv_vs_rho1": {
+        "rho": 0.0913,
+        "p": 0.0071,
+        "n": 868
+      },
+      "raw_AI_vs_rho1": {
         "rho": 0.0686,
         "p": 0.0433,
         "n": 868
       },
-      "logArea_vs_rho1": {
-        "rho": -0.0209,
-        "p": 0.539,
-        "n": 868
-      },
-      "Forest_vs_rho1": {
+      "raw_Forest_vs_rho1": {
         "rho": 0.2779,
         "p": 7.38e-17,
+        "n": 868
+      },
+      "partial_Forest_vs_rho1_given_AI": {
+        "rho": 0.2747,
+        "p": 1.72e-16,
+        "n": 868
+      },
+      "raw_Clay_vs_rho1": {
+        "rho": -0.047,
+        "p": 0.167,
         "n": 868
       }
     },
     "test_A_antecedent_only_zero_shared_Pt": {
-      "after_wet_P_mean_rr_res": 0.00302,
-      "after_dry_P_mean_rr_res": -0.03674,
       "wet_minus_dry_rr_res": 0.03976,
       "p_val_rr_res": 0.0,
-      "after_wet_P_mean_dq_mm": -0.02,
-      "after_dry_P_mean_dq_mm": -37.2,
       "wet_minus_dry_dq_mm": 37.19,
-      "p_val_dq_mm": 5.09e-254,
-      "after_high_Qres_minus_low_Qres_rr_res": 0.02322,
-      "after_high_Qres_minus_low_Qres_dq_mm": 26.63,
-      "p_val_Qres_dq_mm": 9.69e-127
+      "p_val_dq_mm": 5.09e-254
     },
-    "test_B_transition_vs_permutation_null": {
-      "obs_drying_minus_wetting_rr_res": 0.04416,
-      "null_mean_drying_minus_wetting_rr_res": 0.01853,
-      "null_sd_rr_res": 0.00069,
-      "excess_physical_asymmetry_rr_res": 0.02563,
-      "z_score_rr_res": 37.28,
+    "test_B_euler_theorem_vs_mc_null": {
       "obs_drying_minus_wetting_dq_mm": 43.82,
-      "null_mean_drying_minus_wetting_dq_mm": 18.36,
-      "excess_physical_asymmetry_dq_mm": 25.46,
-      "z_score_dq_mm": 32.28
+      "mc_null_mean_dq_mm": 18.36,
+      "euler_closed_form_null_dq_mm": 18.35,
+      "euler_vs_mc_abs_error_mm": 0.01,
+      "excess_physical_asymmetry_dq_mm": 25.48,
+      "z_score_dq_mm": 32.28,
+      "obs_drying_minus_wetting_rr_res": 0.04416,
+      "mc_null_mean_rr_res": 0.01853,
+      "euler_closed_form_null_rr_res": 0.01853,
+      "excess_physical_asymmetry_rr_res": 0.02563
     }
+  },
+  "AUS_JulJun_WaterYear_Sensitivity": {
+    "n_basin_years": 27232,
+    "between_basin_ICC": 0.5615,
+    "within_basin_fu_rr_r": 0.2252,
+    "basin_median_rho1": 0.1239,
+    "test_A_wet_minus_dry_dq_mm": 30.12,
+    "test_B_euler_null_dq_mm": -0.95,
+    "test_B_excess_physical_dq_mm": 22.78
   }
 }

@@ -13,9 +13,9 @@ from collections import defaultdict
 import numpy as np
 from scipy.optimize import minimize_scalar
 
-GB_ZIP = "/Users/yueliangmanle/Desktop/论文10月26日/data/raw/camels_gb_v1/CAMELS_GB_v1.zip"
-AUS_DIR = "/Users/yueliangmanle/Desktop/论文10月26日/data/raw/camels_aus_v2.03"
-OUT_DIR = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ/data"
+GB_ZIP = "./data/raw/camels_gb_v1/CAMELS_GB_v1.zip"
+AUS_DIR = "./data/raw/camels_aus_v2.03"
+OUT_DIR = "./data"
 os.makedirs(OUT_DIR, exist_ok=True)
 
 MIN_VALID_DAYS_PER_WY = 355

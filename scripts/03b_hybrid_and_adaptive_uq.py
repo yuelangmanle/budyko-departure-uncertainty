@@ -22,7 +22,7 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.inspection import permutation_importance
 from sklearn.model_selection import KFold
 
-ROOT = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "data")
 RES_DIR = os.path.join(ROOT, "results")
 os.makedirs(RES_DIR, exist_ok=True)

@@ -25,8 +25,8 @@ from scipy.optimize import minimize_scalar
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import KFold
 
-DATA_DIR = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ/data"
-RES_DIR = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ/results"
+DATA_DIR = "./data"
+RES_DIR = "./results"
 os.makedirs(RES_DIR, exist_ok=True)
 
 ALPHA = 0.10  # 90% nominal coverage
@@ -560,7 +560,7 @@ def main():
         "S4_AUS_Millennium_Drought": run_s4_millennium_drought(records),
     }
 
-    out_path = os.path.join(RES_DIR, "milestone3_modeling_uq.json")
+    out_path = os.path.join(RES_DIR, "modeling_uq_summary.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
     print("\n=== MILESTONE 3 MODELING & CONFORMAL UQ SUMMARY ===")

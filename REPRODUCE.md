@@ -1,7 +1,7 @@
-# Reproducibility Guide (Anonymized Review Bundle)
+# Reproducibility Guide
 
 ## Environment
-Tested on Python 3.12 with pinned scientific dependencies (see `requirements.txt`):
+Tested on Python 3.12 with pinned scientific dependencies (`requirements.txt`):
 ```bash
 pip install -r requirements.txt
 ```
@@ -15,11 +15,11 @@ Download the two official catchment-averaged benchmarks and place them under `da
 Run the pipeline from the bundle root directory:
 ```bash
 python scripts/01_build_dataset.py
-python scripts/02_diagnostics_upgraded.py
+python scripts/02_diagnostics_and_memory.py
 python scripts/03_models_and_conformal_uq.py
-python scripts/03_models_upgraded.py
-python scripts/07_p0_rigorous_checks.py
-python scripts/05_generate_top_journal_figures.py
+python scripts/03b_hybrid_and_adaptive_uq.py
+python scripts/04_crossfit_null_and_transfer.py
+python scripts/05_plot_figures.py
 ```
 
 All pre-computed JSON summary tables corresponding to Tables 1–4 and Figures 1–6 are included in `results/`.
