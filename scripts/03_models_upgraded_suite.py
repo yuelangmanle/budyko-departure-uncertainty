@@ -22,7 +22,7 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.inspection import permutation_importance
 from sklearn.model_selection import KFold
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ"
 DATA_DIR = os.path.join(ROOT, "data")
 RES_DIR = os.path.join(ROOT, "results")
 os.makedirs(RES_DIR, exist_ok=True)
@@ -83,14 +83,18 @@ def eval_interval(y_true, lo, hi, alpha=ALPHA):
 
 
 def conformal_quantile(scores, alpha=ALPHA):
-    scores = np.asarray(scores, dtype=float)
+    scores = np.sort(np.asarray(scores, dtype=float))
     n = len(scores)
     if alpha <= 0.0:
-        return float(np.max(scores))
+        return float(scores[-1])
     if alpha >= 1.0:
-        return float(np.min(scores))
-    level = min(1.0, max(0.0, math.ceil((n + 1) * (1.0 - alpha)) / n))
-    return float(np.quantile(scores, level, method="higher"))
+        return float(scores[0])
+    k = math.ceil((n + 1) * (1.0 - alpha))
+    if k <= 0:
+        return float(scores[0])
+    if k > n:
+        return float(scores[-1])
+    return float(scores[k - 1])
 
 
 def run_aci_sequential(scores_cal, lo_te, hi_te, y_te, years_te, gamma=0.05, alpha=ALPHA):
@@ -398,10 +402,9 @@ def main():
         all_log_lo.append(mlo); all_log_hi.append(mhi)
         all_y.append(yte); all_reg.append(rte)
 
-        if fold == 0:
-            m3 = HistGradientBoostingRegressor(max_iter=250, max_depth=6, learning_rate=0.05, min_samples_leaf=30, random_state=SEED).fit(Xtr, ytr)
-            pi0 = permutation_importance(m3, Xte, yte, n_repeats=5, random_state=SEED, scoring="neg_root_mean_squared_error")
-            pi_pub_accum = pi0.importances_mean
+        m3 = HistGradientBoostingRegressor(max_iter=250, max_depth=6, learning_rate=0.05, min_samples_leaf=30, random_state=SEED + fold).fit(Xtr, ytr)
+        pi_f = permutation_importance(m3, Xte, yte, n_repeats=5, random_state=SEED + fold, scoring="neg_root_mean_squared_error")
+        pi_pub_accum += pi_f.importances_mean / 5.0
 
     y_all = np.concatenate(all_y); reg_all = np.concatenate(all_reg)
     p_all = np.concatenate(all_phys_p)
@@ -421,14 +424,15 @@ def main():
         "Top10_PUB_Feature_Importance_DeltaRMSE": pub_imp,
     }
 
-    # === 3. S3 Cross-Continent OOD: Physics-Anchored Residual HGBR Rescuing GB -> AUS! ===
+    # === 3. S3 Cross-Continent OOD: Unified Deterministic Split ===
     print("Running upgraded S3 Cross-Continent (Physics-Anchored Residual HGBR vs Pure ML)...")
     gb = [r for r in records if r["region"] == "GB"]
     aus = [r for r in records if r["region"] == "AUS"]
     s3_out = {}
     for label, src, tgt in [("GB_to_AUS", gb, aus), ("AUS_to_GB", aus, gb)]:
+        rng_s3 = np.random.default_rng(SEED)
         sb = sorted(set(r["basin_id"] for r in src))
-        perm = rng.permutation(len(sb))
+        perm = rng_s3.permutation(len(sb))
         cut = int(0.75 * len(sb))
         tr_set = set(sb[i] for i in perm[:cut])
         tr_r = [r for r in src if r["basin_id"] in tr_set]
@@ -511,8 +515,8 @@ def main():
 
     m_dr = (wy_a >= 1997) & (wy_a <= 2009)
     m_po = wy_a >= 2010
-    # Regional stratification: SE Australia (Victoria/NSW/MDB: lat < -32 & lon > 138) vs Tropical North (lat > -25) vs Other
-    m_se = (lat_a < -32.0) & (lon_a > 138.0)
+    # Regional stratification: Mainland SE Australia (Vic/NSW/MDB: -39.2 < lat < -32, lon > 138, excluding Tasmania) vs Tropical North (lat > -25)
+    m_se = (lat_a < -32.0) & (lat_a > -39.2) & (lon_a > 138.0)
     m_no = lat_a > -25.0
 
     out["S4_Upgraded_ACI_and_Spatial"] = {

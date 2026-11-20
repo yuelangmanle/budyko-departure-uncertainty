@@ -121,31 +121,33 @@ def make_fig1(attrs):
     fig, axes = plt.subplots(2, 2, figsize=(11.0, 8.2))
     ax1, ax2, ax3, ax4 = axes.ravel()
 
-    # (a) GB spatial map
+    # (a) GB spatial map (corrected high-latitude aspect ratio)
     gb_lon = np.array([float(r["lon"]) for r in gb])
     gb_lat = np.array([float(r["lat"]) for r in gb])
     gb_ai = np.array([float(r["long_term_AI"]) for r in gb])
     sc1 = ax1.scatter(gb_lon, gb_lat, c=gb_ai, cmap="YlGnBu_r", s=18, vmin=0.12, vmax=0.95, alpha=0.88, edgecolors="#222222", linewidths=0.18)
     cb1 = plt.colorbar(sc1, ax=ax1, fraction=0.045, pad=0.03)
     cb1.set_label(r"Long-term $AI = \overline{PET}/\overline{P}$")
+    ax1.set_aspect(1.0 / math.cos(math.radians(54.0)))
     ax1.set_facecolor("#F7F9FB")
     ax1.grid(True, ls=":", color="#CCCCCC", alpha=0.7)
     ax1.set_xlabel("Longitude (°E)")
     ax1.set_ylabel("Latitude (°N)")
     ax1.set_title("(a) Great Britain Benchmark (CAMELS-GB, n = 644)")
 
-    # (b) AUS spatial map with SE-Australia drought focus box
+    # (b) AUS spatial map with Mainland SE-Australia drought focus box (excluding Tasmania, lat > -39.2)
     aus_lon = np.array([float(r["lon"]) for r in aus])
     aus_lat = np.array([float(r["lat"]) for r in aus])
     aus_ai = np.array([float(r["long_term_AI"]) for r in aus])
     sc2 = ax2.scatter(aus_lon, aus_lat, c=np.clip(aus_ai, 0.3, 4.0), cmap="inferno_r", s=18, vmin=0.3, vmax=4.0, alpha=0.88, edgecolors="#222222", linewidths=0.18)
     cb2 = plt.colorbar(sc2, ax=ax2, fraction=0.045, pad=0.03)
     cb2.set_label(r"Long-term $AI$ (capped at 4.0)")
-    rect = Rectangle((138.0, -44.0), 16.0, 12.0, lw=1.2, ls="--", edgecolor=C_BLUE, facecolor="none", zorder=5)
+    rect = Rectangle((138.0, -39.2), 16.0, 7.2, lw=1.2, ls="--", edgecolor=C_BLUE, facecolor="none", zorder=5)
     ax2.add_patch(rect)
-    ax2.text(146.0, -31.0, "SE Australia\n(Vic / MDB)", color=C_BLUE, fontsize=7.6, ha="center", fontweight="bold")
+    ax2.text(146.0, -31.1, "Mainland SE AUS\n(Vic / MDB)", color=C_BLUE, fontsize=7.4, ha="center", fontweight="bold")
     ax2.axhline(-25.0, color=C_GREEN, ls=":", lw=1.0)
     ax2.text(123.5, -23.7, "Northern Tropical (lat > -25°)", color=C_GREEN, fontsize=7.3, fontweight="bold")
+    ax2.set_aspect(1.0 / math.cos(math.radians(-28.0)))
     ax2.set_facecolor("#FBF9F6")
     ax2.grid(True, ls=":", color="#CCCCCC", alpha=0.7)
     ax2.set_xlabel("Longitude (°E)")
@@ -325,9 +327,9 @@ def make_fig3():
     ax2.axvspan(0.3, 0.936, color="#E6F2FA", alpha=0.75, label="GB Training Support ($AI \\leq 0.94$)")
     ax2.fill_between(bc, o_q25, o_q75, color="#BDBDBD", alpha=0.35, label="Observed AUS IQR")
     ax2.plot(bc, o_med, "ko-", lw=2.0, ms=4.5, label="Observed AUS Median")
-    ax2.plot(bc, d_med, "s--", color=C_ORANGE, lw=1.9, ms=4.5, label="Direct HGBR (R² = −1.67, Cov = 23%)")
+    ax2.plot(bc, d_med, "s--", color=C_ORANGE, lw=1.9, ms=4.5, label="Direct HGBR (R² = −1.12, Cov = 26%)")
     ax2.plot(bc, f_med, "^:", color=C_BLUE, lw=1.6, ms=4.5, label="Source Physical Fu (R² = +0.60)")
-    ax2.plot(bc, p_med, "D-", color=C_GREEN, lw=2.1, ms=4.8, label="PhysRes HGBR (R² = +0.52, Cov = 89%)")
+    ax2.plot(bc, p_med, "D-", color=C_GREEN, lw=2.1, ms=4.8, label="PhysRes HGBR (R² = +0.52, Cov = 86%)")
     ax2.axvline(0.936, color=C_BLUE, ls="--", lw=1.0)
     ax2.set_xscale("log")
     ax2.set_xticks([0.3, 0.5, 1.0, 2.0, 4.0, 6.0])
@@ -459,8 +461,8 @@ def make_fig5(m3_up):
     # Top half: Coverage shift Static CQR -> Online ACI; Bottom inset/twin: Pre-1997 Fu Bias vs PhysRes Bias
     ax2.axvline(90.0, color="black", ls=":", lw=1.1)
     y_pos = [0, 1]
-    labels = ["SE Australia\n(Vic / MDB, n = 2,875)\nPre-97 Fu Bias: +0.0686",
-              "Northern Tropical\n(lat > -25°, n = 887)\nPre-97 Fu Bias: −0.0016"]
+    labels = [f"Mainland SE AUS\n(Vic / MDB, n = {se['n']:,})\nPre-97 Fu Bias: {se['Pre97_Fu_Bias']:+.4f}",
+              f"Northern Tropical\n(lat > -25°, n = {no['n']:,})\nPre-97 Fu Bias: {no['Pre97_Fu_Bias']:+.4f}"]
     st_vals = [se["Static_CQR"]["Coverage"] * 100, no["Static_CQR"]["Coverage"] * 100]
     ac_vals = [se["Online_ACI"]["Coverage"] * 100, no["Online_ACI"]["Coverage"] * 100]
 

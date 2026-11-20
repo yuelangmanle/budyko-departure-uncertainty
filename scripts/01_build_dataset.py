@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build unified, strictly quality-controlled annual water-year dataset
+Milestone 1: Build unified, strictly quality-controlled annual water-year dataset
 combining CAMELS-GB v1 (UK, energy-limited) and CAMELS-AUS v2.03 (Australia, water-limited).
 """
 import csv
@@ -13,10 +13,9 @@ from collections import defaultdict
 import numpy as np
 from scipy.optimize import minimize_scalar
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GB_ZIP = os.environ.get("CAMELS_GB_ZIP", os.path.join(ROOT, "raw_data", "CAMELS_GB_v1.zip"))
-AUS_DIR = os.environ.get("CAMELS_AUS_DIR", os.path.join(ROOT, "raw_data", "camels_aus_v2.03"))
-OUT_DIR = os.path.join(ROOT, "data")
+GB_ZIP = "/Users/yueliangmanle/Desktop/论文10月26日/data/raw/camels_gb_v1/CAMELS_GB_v1.zip"
+AUS_DIR = "/Users/yueliangmanle/Desktop/论文10月26日/data/raw/camels_aus_v2.03"
+OUT_DIR = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ/data"
 os.makedirs(OUT_DIR, exist_ok=True)
 
 MIN_VALID_DAYS_PER_WY = 355
@@ -127,7 +126,7 @@ def load_gb():
             "lon": safe_float(t.get("gauge_lon")),
             "area_km2": safe_float(t.get("area")),
             "elev_mean_m": safe_float(t.get("elev_mean")),
-            "slope_proxy": safe_float(t.get("dpsbar")),  # m/km
+            "slope_proxy": (safe_float(t.get("dpsbar")) / 10.0) if not math.isnan(safe_float(t.get("dpsbar"))) else np.nan,  # converted from m/km to % to match CAMELS-AUS mean_slope_pct
             "bfi": safe_float(h.get("baseflow_index")),
             "frac_snow": safe_float(c.get("frac_snow"), 0.0),
             "p_seasonality": safe_float(c.get("p_seasonality")),

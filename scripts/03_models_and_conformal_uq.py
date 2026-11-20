@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Zero-Leakage Modeling & Sharp Heteroscedastic Conformal Prediction
+Milestone 3A: Zero-Leakage Modeling & Sharp Heteroscedastic Conformal Prediction
 Across 1,202 Great Britain (CAMELS-GB) + Australia (CAMELS-AUS) Catchments.
 
 Scenarios:
@@ -25,9 +25,8 @@ from scipy.optimize import minimize_scalar
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import KFold
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(ROOT, "data")
-RES_DIR = os.path.join(ROOT, "results")
+DATA_DIR = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ/data"
+RES_DIR = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ/results"
 os.makedirs(RES_DIR, exist_ok=True)
 
 ALPHA = 0.10  # 90% nominal coverage
@@ -82,10 +81,14 @@ def eval_interval(y_true, lo, hi, alpha=ALPHA):
 
 
 def conformal_quantile(scores, alpha=ALPHA):
-    scores = np.asarray(scores, dtype=float)
+    scores = np.sort(np.asarray(scores, dtype=float))
     n = len(scores)
-    level = min(1.0, math.ceil((n + 1) * (1.0 - alpha)) / n)
-    return float(np.quantile(scores, level, method="higher"))
+    k = math.ceil((n + 1) * (1.0 - alpha))
+    if k <= 0:
+        return float(scores[0])
+    if k > n:
+        return float(np.inf)
+    return float(scores[k - 1])
 
 
 def load_unified():
@@ -478,8 +481,9 @@ def run_s3_cross_continent(records):
     rng = np.random.default_rng(SEED)
 
     for label, src, tgt in [("GB_to_AUS", gb, aus), ("AUS_to_GB", aus, gb)]:
+        rng_s3 = np.random.default_rng(SEED)
         src_basins = sorted(set(r["basin_id"] for r in src))
-        perm = rng.permutation(len(src_basins))
+        perm = rng_s3.permutation(len(src_basins))
         cut = int(0.75 * len(src_basins))
         tr_set = set(src_basins[i] for i in perm[:cut])
         tr_recs = [r for r in src if r["basin_id"] in tr_set]
@@ -556,10 +560,10 @@ def main():
         "S4_AUS_Millennium_Drought": run_s4_millennium_drought(records),
     }
 
-    out_path = os.path.join(RES_DIR, "modeling_uq_summary.json")
+    out_path = os.path.join(RES_DIR, "milestone3_modeling_uq.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
-    print("\n=== MODELING & CONFORMAL UQ SUMMARY ===")
+    print("\n=== MILESTONE 3 MODELING & CONFORMAL UQ SUMMARY ===")
     print(json.dumps(results, indent=2))
 
 
