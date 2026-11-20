@@ -20,7 +20,8 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
+from matplotlib.patches import Rectangle, Polygon
+from matplotlib.collections import PatchCollection, LineCollection
 
 ROOT = "/Users/yueliangmanle/Desktop/MESE_Budyko_UQ"
 DATA_DIR = os.path.join(ROOT, "data")
@@ -114,6 +115,49 @@ def compute_s3_curves_if_needed():
     return np.load(cache)
 
 
+
+def draw_basemap(ax, iso_codes, xlim, ylim, draw_states=False):
+    geo_dir = os.path.join(DATA_DIR, "geo")
+    c_path = os.path.join(geo_dir, "ne_50m_countries.geojson")
+    s_path = os.path.join(geo_dir, "ne_50m_states.geojson")
+    ax.set_facecolor("#EAF2F8")  # subtle ocean tint
+    if os.path.exists(c_path):
+        gj = json.load(open(c_path, encoding="utf-8"))
+        patches = []
+        for feat in gj["features"]:
+            props = feat.get("properties", {})
+            iso = props.get("ISO_A3") or props.get("ADM0_A3") or ""
+            # Draw target countries in crisp warm ivory, neighbors in muted light gray
+            is_tgt = iso in iso_codes
+            geom = feat["geometry"]
+            polys = [geom["coordinates"]] if geom["type"] == "Polygon" else (geom["coordinates"] if geom["type"] == "MultiPolygon" else [])
+            for poly in polys:
+                ring = poly[0]
+                xs = [pt[0] for pt in ring]; ys = [pt[1] for pt in ring]
+                if max(xs) < xlim[0] - 2 or min(xs) > xlim[1] + 2 or max(ys) < ylim[0] - 2 or min(ys) > ylim[1] + 2:
+                    continue
+                ax.add_patch(Polygon(
+                    ring, closed=True,
+                    facecolor="#F7F6F2" if is_tgt else "#E8E8E5",
+                    edgecolor="#4A5568" if is_tgt else "#9AA5B1",
+                    linewidth=0.65 if is_tgt else 0.4,
+                    zorder=1
+                ))
+    if draw_states and os.path.exists(s_path):
+        sgj = json.load(open(s_path, encoding="utf-8"))
+        segs = []
+        for feat in sgj["features"]:
+            geom = feat["geometry"]
+            lines = [geom["coordinates"]] if geom["type"] == "LineString" else (geom["coordinates"] if geom["type"] == "MultiLineString" else [])
+            for line in lines:
+                xs = [pt[0] for pt in line]; ys = [pt[1] for pt in line]
+                if max(xs) < xlim[0] or min(xs) > xlim[1] or max(ys) < ylim[0] or min(ys) > ylim[1]:
+                    continue
+                segs.append(line)
+        if segs:
+            ax.add_collection(LineCollection(segs, colors="#8D99AE", linewidths=0.55, linestyles="--", alpha=0.75, zorder=2))
+    ax.set_xlim(xlim); ax.set_ylim(ylim)
+
 def make_fig1(attrs):
     gb = [r for r in attrs if r["region"] == "GB"]
     aus = [r for r in attrs if r["region"] == "AUS"]
@@ -125,11 +169,11 @@ def make_fig1(attrs):
     gb_lon = np.array([float(r["lon"]) for r in gb])
     gb_lat = np.array([float(r["lat"]) for r in gb])
     gb_ai = np.array([float(r["long_term_AI"]) for r in gb])
-    sc1 = ax1.scatter(gb_lon, gb_lat, c=gb_ai, cmap="YlGnBu_r", s=18, vmin=0.12, vmax=0.95, alpha=0.88, edgecolors="#222222", linewidths=0.18)
+    draw_basemap(ax1, {"GBR"}, xlim=(-6.8, 2.2), ylim=(49.6, 59.2), draw_states=False)
+    sc1 = ax1.scatter(gb_lon, gb_lat, c=gb_ai, cmap="YlGnBu_r", s=17, vmin=0.12, vmax=0.95, alpha=0.90, edgecolors="#222222", linewidths=0.18, zorder=4)
     cb1 = plt.colorbar(sc1, ax=ax1, fraction=0.045, pad=0.03)
     cb1.set_label(r"Long-term $AI = \overline{PET}/\overline{P}$")
     ax1.set_aspect(1.0 / math.cos(math.radians(54.0)))
-    ax1.set_facecolor("#F7F9FB")
     ax1.grid(True, ls=":", color="#CCCCCC", alpha=0.7)
     ax1.set_xlabel("Longitude (°E)")
     ax1.set_ylabel("Latitude (°N)")
@@ -139,16 +183,18 @@ def make_fig1(attrs):
     aus_lon = np.array([float(r["lon"]) for r in aus])
     aus_lat = np.array([float(r["lat"]) for r in aus])
     aus_ai = np.array([float(r["long_term_AI"]) for r in aus])
-    sc2 = ax2.scatter(aus_lon, aus_lat, c=np.clip(aus_ai, 0.3, 4.0), cmap="inferno_r", s=18, vmin=0.3, vmax=4.0, alpha=0.88, edgecolors="#222222", linewidths=0.18)
+    draw_basemap(ax2, {"AUS"}, xlim=(111.5, 155.5), ylim=(-44.8, -9.8), draw_states=True)
+    sc2 = ax2.scatter(aus_lon, aus_lat, c=np.clip(aus_ai, 0.3, 4.0), cmap="inferno_r", s=17, vmin=0.3, vmax=4.0, alpha=0.90, edgecolors="#222222", linewidths=0.18, zorder=4)
     cb2 = plt.colorbar(sc2, ax=ax2, fraction=0.045, pad=0.03)
     cb2.set_label(r"Long-term $AI$ (capped at 4.0)")
-    rect = Rectangle((138.0, -39.2), 16.0, 7.2, lw=1.2, ls="--", edgecolor=C_BLUE, facecolor="none", zorder=5)
+    rect = Rectangle((138.0, -39.2), 16.0, 7.2, lw=1.3, ls="--", edgecolor=C_BLUE, facecolor="none", zorder=5)
     ax2.add_patch(rect)
-    ax2.text(146.0, -31.1, "Mainland SE AUS\n(Vic / MDB)", color=C_BLUE, fontsize=7.4, ha="center", fontweight="bold")
-    ax2.axhline(-25.0, color=C_GREEN, ls=":", lw=1.0)
-    ax2.text(123.5, -23.7, "Northern Tropical (lat > -25°)", color=C_GREEN, fontsize=7.3, fontweight="bold")
+    ax2.text(146.0, -30.8, "Mainland SE AUS\n(Vic / MDB)", color=C_BLUE, fontsize=7.3, ha="center", fontweight="bold",
+             bbox=dict(facecolor="white", edgecolor="none", alpha=0.72, pad=1.0), zorder=6)
+    ax2.axhline(-25.0, color=C_GREEN, ls=":", lw=1.1, zorder=3)
+    ax2.text(123.0, -23.5, "Northern Tropical (lat > -25°)", color=C_GREEN, fontsize=7.2, fontweight="bold",
+             bbox=dict(facecolor="white", edgecolor="none", alpha=0.72, pad=1.0), zorder=6)
     ax2.set_aspect(1.0 / math.cos(math.radians(-28.0)))
-    ax2.set_facecolor("#FBF9F6")
     ax2.grid(True, ls=":", color="#CCCCCC", alpha=0.7)
     ax2.set_xlabel("Longitude (°E)")
     ax2.set_ylabel("Latitude (°N)")
@@ -298,7 +344,7 @@ def make_fig3():
     ax1.text(0.04, 0.94,
              "S1 Gauged Temporal (n = 10,432)\n"
              "M4 Dyn. HGBR: RMSE = 0.0768, R² = 0.920\n"
-             "M5 PhysRes:   RMSE = 0.0783, R² = 0.916\n"
+             "M5 PhysRes:   RMSE = 0.0785, R² = 0.916\n"
              "M2 Dyn. ARX:  RMSE = 0.0887, R² = 0.893\n"
              "M1 Basin Fu:  RMSE = 0.1004, R² = 0.863",
              transform=ax1.transAxes, va="top", fontsize=7.4, family="monospace",

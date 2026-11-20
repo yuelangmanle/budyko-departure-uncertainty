@@ -35,7 +35,7 @@ def fu_rr(ai, omega):
 
 
 def fit_omega(ai, rr):
-    res = minimize_scalar(lambda w: float(np.mean((fu_rr(ai, w) - rr) ** 2)), bounds=(1.05, 12.0), method="bounded")
+    res = minimize_scalar(lambda w: float(np.mean((fu_rr(ai, w) - rr) ** 2)), bounds=(1.1, 10.0), method="bounded")
     return float(res.x)
 
 
